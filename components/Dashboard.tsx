@@ -12,10 +12,12 @@ export const Dashboard = (): JSX.Element => (
 );
 
 const DashboardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
   width: 100vw;
   height: 100vh;
-  background-color: blue;
-  display: flex;
+
+  background-color: ${theme.colors.background.main};
   align-items: center;
-  flex-direction: column;
 `;
