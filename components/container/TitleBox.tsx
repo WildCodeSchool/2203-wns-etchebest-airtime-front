@@ -31,13 +31,12 @@ const Box = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-right: 32px;
-  margin-left: 32px;
+  margin: 0 32px;
   padding: 24px;
 `;
 
 const Flex = styled.div`
-align-items: center;
+  align-items: center;
   display: flex;
   flex-direction: row;
 `;
@@ -53,7 +52,7 @@ const ProjectTitle = styled.div`
   margin-bottom: 16px;
 `;
 const ProjectManager = styled.div`
-font-weight: 600;
+  font-weight: 600;
   margin-left: 4px;
 `;
 

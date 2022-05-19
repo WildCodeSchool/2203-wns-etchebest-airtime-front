@@ -6,6 +6,7 @@ import { DropBox } from "../components/container/DropBox";
 import { TitleBox } from "../components/container/TitleBox";
 import { DropZone } from "../components/container/DropZone";
 import { ColumnStatus } from "../components/ColumnStatus";
+import { gql, useQuery } from "@apollo/client";
 
 const DROP_DATA = [
   {
@@ -35,6 +36,28 @@ const ProjectPage: NextPage = () => {
     title: "Project Title",
     manager: "Bryan Kaneb",
   };
+
+  const GET_TICKETS = gql`
+    query getTest {   //front
+      getAllTickets { //back
+        id
+        title
+        comment
+        estimated_time
+        spent_time_minutes
+        status
+        user_id
+        project_id
+      }
+    }
+  `;
+
+  const { loading, error, data } = useQuery(GET_TICKETS);
+  console.log("🚀 ~ error", error);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  console.log(data);
 
   return (
     <WrapperProject>

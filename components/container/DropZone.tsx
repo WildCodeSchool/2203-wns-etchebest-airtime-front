@@ -11,8 +11,7 @@ const Box = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding-left: 32px;
-  padding-right: 32px;
+  padding: 0 32px;
   height: 100%;
 `;
 
