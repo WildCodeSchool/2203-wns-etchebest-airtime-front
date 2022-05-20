@@ -17,49 +17,37 @@ const NavbarList = ({ categories }: IPropsNavbarList) => {
 
   const displayedSubCategories = (index: number): void => {
     setDisplaySubCategories(displaySubCategories === index ? -1 : index);
-  };
+  }
 
   return (
     <>
-      {categories.map((category, index) => {
-        return category?.subCategories?.length !== 0 ? (
-          <>
-            <List onClick={() => displayedSubCategories(index)}>
-              {category.label}
-            </List>
-            <ul key={index}>
-              {displaySubCategories === index
-                ? category?.subCategories?.map((subCategory, index2) => {
-                    return (
-                      <List
-                        key={index2}
-                        color={"lightgrey"}
-                        style={{ border: "none" }}
-                      >
-                        {subCategory}
-                      </List>
-                    );
-                  })
-                : null}
-            </ul>
-          </>
-        ) : (
-          <List key={index}>{category.label}</List>
-        );
-      })}
+        {
+        categories.map((category, index) => {
+            return category?.subCategories?.length !== 0 ?
+                (
+                    <>
+                    <List onClick={() => displayedSubCategories(index)}>{category.label}</List>
+                    <ul key={index}>
+                        {displaySubCategories === index ? category?.subCategories?.map((subCategory, index2) => {
+                            return <List key={index2} color={'lightgrey'}>{subCategory}</List>
+                        }) : null}
+                    </ul>
+                    </>
+                ) : <List key={index}>{category.label}</List>
+        })
+        }
     </>
-  );
+  )
 };
 
 interface IPropsList {
   background?: string;
   color?: string;
-  border?: string;
 }
 
 const List = styled.li<IPropsList>`
   background: ${({ background }) => background || "#383838"};
-  border: ${({ border }) => border || "solid 1px #f0f0f0"}};
+  border: solid 1px #f0f0f0;
   border-left: none;
   border-right: none;
   color: ${({ color }) => color || theme.colors.text.white};
