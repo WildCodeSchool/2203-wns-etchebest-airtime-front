@@ -61,8 +61,6 @@ const WrapperModalTicket = styled.div`
   display: flex;
   align-items: start;
   justify-content: center;
-  background: ${theme.colors.background.transparentWhite};
-  /* backdrop-filter: blur(3px); */
   transform: translateY(-70%);
   z-index: 10;
   transition: all 1s;

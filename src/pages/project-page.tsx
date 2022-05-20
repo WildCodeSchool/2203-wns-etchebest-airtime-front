@@ -37,16 +37,6 @@ const DROP_DATA = [
   },
 ];
 
-const ticket = {
-  title: "Test",
-  comment: "Test",
-  estimated_time: 3,
-  spent_time_minutes: 4,
-  status: "to do",
-  project_id: "1",
-  user_id: "aef4f44f-bbef-11ec-b561-309c23902d82",
-};
-
 const ProjectPage: NextPage = () => {
   const { loading, error, data } = useQuery(GET_ALL_TICKETS);
   console.log("🚀 ~ data", data);
