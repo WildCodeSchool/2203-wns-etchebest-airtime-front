@@ -1,12 +1,18 @@
+import { useMutation, useQuery } from "@apollo/client";
 import { NextPage } from "next";
-import React from "react";
-import { WrapperProject } from "../components/container/WrapperProject";
-import { theme } from "../styles/theme";
-import { DropBox } from "../components/container/DropBox";
-import { TitleBox } from "../components/container/TitleBox";
-import { DropZone } from "../components/container/DropZone";
+import { toast } from "react-toastify";
 import { ColumnStatus } from "../components/ColumnStatus";
-import { gql, useQuery } from "@apollo/client";
+import { DropBox } from "../components/container/DropBox";
+import { DropZone } from "../components/container/DropZone";
+import { TitleBox } from "../components/container/TitleBox";
+import { WrapperProject } from "../components/container/WrapperProject";
+import {
+  CREATE_TICKET,
+  DELETE_TICKET,
+  UPDATE_TICKET,
+} from "../graphql/mutations/ticketMutation";
+import { GET_ALL_TICKETS } from "../graphql/queries/ticketQuery";
+import { theme } from "../styles/theme";
 
 const DROP_DATA = [
   {
@@ -31,37 +37,109 @@ const DROP_DATA = [
   },
 ];
 
+const ticket = {
+  title: "Test",
+  comment: "Test",
+  estimated_time: 3,
+  spent_time_minutes: 4,
+  status: "to do",
+  project_id: "1",
+  user_id: "aef4f44f-bbef-11ec-b561-309c23902d82",
+};
+
 const ProjectPage: NextPage = () => {
+  const { loading, error, data } = useQuery(GET_ALL_TICKETS);
+  console.log("🚀 ~ data", data);
+  //Create ticket
+  const [createTicket, { loading: ticketLoading, error: ticketError }] =
+    useMutation(CREATE_TICKET, {
+      refetchQueries: [GET_ALL_TICKETS],
+    });
+
+  //Delete ticket
+  const [
+    deleteTicket,
+    { loading: deleteTicketLoading, error: deleteTicketError },
+  ] = useMutation(DELETE_TICKET, {
+    refetchQueries: [GET_ALL_TICKETS],
+  });
+
+  const [
+    updateTicket,
+    { loading: updateTicketLoading, error: updateTicketError },
+  ] = useMutation(UPDATE_TICKET, {
+    refetchQueries: [GET_ALL_TICKETS],
+  });
+
+  if (loading) return <p>Loading...</p>;
+  if (error)
+    return (
+      <>
+        {toast.error("Une erreur est survenue", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        })}
+      </>
+    );
+
+  if (ticketLoading) return <p>Submitting...</p>;
+  if (ticketError) return <p>Error on submit: {ticketError.message}</p>;
+
   const project = {
     title: "Project Title",
     manager: "Bryan Kaneb",
   };
 
-  const GET_TICKETS = gql`
-    query getTest {   //front
-      getAllTickets { //back
-        id
-        title
-        comment
-        estimated_time
-        spent_time_minutes
-        status
-        user_id
-        project_id
-      }
-    }
-  `;
-
-  const { loading, error, data } = useQuery(GET_TICKETS);
-  console.log("🚀 ~ error", error);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
-  console.log(data);
-
   return (
     <WrapperProject>
       <TitleBox title={project.title} manager={project.manager} />
+      <div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            createTicket({
+              variables: {
+                title: "Test",
+                comment: "Test",
+                estimated_time: 3,
+                spent_time_minutes: 4,
+                status: "to do",
+                project_id: 1,
+                user_id: "aef4f44f-bbef-11ec-b561-309c23902d82",
+              },
+            });
+          }}
+        >
+          <button type="submit">Add Ticket</button>
+        </form>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            deleteTicket({
+              variables: {
+                deleteTicketId: 2,
+              },
+            });
+          }}
+        >
+          <button type="submit">Delete Ticket</button>
+        </form>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            updateTicket({
+              variables: {
+                updateTicketId: 3,
+                title: "Test3",
+                comment: "Test3",
+                estimated_time: 6,
+                spent_time_minutes: 10,
+              },
+            });
+          }}
+        >
+          <button type="submit">Update Ticket</button>
+        </form>
+      </div>
       <DropZone>
         {DROP_DATA.map((item, index) => (
           <DropBox color={item.color} key={index}>
