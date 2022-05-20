@@ -49,4 +49,5 @@ const ButtonConnexion = styled(GlobalButton)`
 `;
 
 const ButtonRegistration = styled(GlobalButton)``;
+
 export default Authentification;

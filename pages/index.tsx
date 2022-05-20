@@ -1,8 +1,9 @@
 import type { NextPage } from "next";
+import Navbar from "../components/navbar/Navbar";
 import Authentification from "./Authentification";
 
 const Home: NextPage = () => {
-  return <Authentification />;
+  return <Navbar />
 };
 
 export default Home;
