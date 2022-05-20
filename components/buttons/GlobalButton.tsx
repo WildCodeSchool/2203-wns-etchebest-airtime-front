@@ -2,13 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 
-type IPropsGlobalButton = IPropsButton & { label?: string };
+type IPropsGlobalButton = IPropsButton & { label?: string, onClick: () => void };
 
 export const GlobalButton = ({
   fontSize,
   backgroundColor,
   color,
   label,
+  onClick,
   disabled,
   ...props
 }: IPropsGlobalButton) => {
@@ -18,6 +19,7 @@ export const GlobalButton = ({
       backgroundColor={backgroundColor}
       fontSize={fontSize}
       disabled={disabled}
+      onClick={onClick}
       {...props}
     >
       {label}
@@ -30,6 +32,7 @@ type IPropsButton = {
   backgroundColor?: string;
   fontSize?: number;
   disabled?: boolean;
+  onClick: () => void;
 };
 
 const Button = styled.button<IPropsButton>`
