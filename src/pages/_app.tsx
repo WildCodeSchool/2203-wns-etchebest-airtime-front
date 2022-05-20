@@ -1,14 +1,29 @@
 import '../styles/globals.css';
 import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
-import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const httpLink = createHttpLink({
+  uri: "http://localhost:4000/graphql",
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token,
+    },
+  };
+});
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/",
   cache: new InMemoryCache(),
+  link: authLink.concat(httpLink),
+
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
