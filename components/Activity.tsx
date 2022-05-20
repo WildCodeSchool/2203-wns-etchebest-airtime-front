@@ -1,12 +1,26 @@
 import styled from "styled-components";
-import { theme } from "../styles/theme";
+
+import { activityService } from "../services/activity.service";
+
+import { ActivityLine } from "./ActivityLine";
+
+const displayTickets = activityService.tickets.map((ticket, i) => (
+  <ActivityLine key={i} ticket={ticket} />
+));
 
 export const Activity = (): JSX.Element => {
-  return <ActivityContainer></ActivityContainer>;
+  return (
+    <ActivityContainer>
+      <ActivityLine title />
+      {displayTickets}
+    </ActivityContainer>
+  );
 };
 
 const ActivityContainer = styled.div`
-  background-color: ${theme.colors.background.white};
+  display: flex;
+  flex-direction: column;
+
   flex: 1;
   width: calc(100% - 56px);
   margin: 40px 28px;

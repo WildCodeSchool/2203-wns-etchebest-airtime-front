@@ -1,32 +1,30 @@
 import { theme } from "../styles/theme";
-import { IStatus } from "../types/utils.model";
+import { STATUS } from "../types/enums/status.enum";
 
 export const statusService = {
   status: [
     {
-      text: "To Do",
+      text: STATUS.TODO,
       value: 20,
       color: theme.colors.primary.coral,
     },
     {
-      text: "In Progress",
+      text: STATUS.INPROGRESS,
       value: 36,
       color: theme.colors.primary.salmon,
     },
     {
-      text: "Reviewed",
+      text: STATUS.REVIEWED,
       value: 11,
       color: theme.colors.primary.olive,
     },
     {
-      text: "Completed",
+      text: STATUS.COMPLETED,
       value: 3,
       color: theme.colors.primary.cyan,
     },
   ],
 };
 
-//Get ToDo value
-//Get InProgress value
-//Get Reviewed value
-//Get Completed value
+//TODO: Change DB enum to match front-end enum
+//TODO: Get the values in database
