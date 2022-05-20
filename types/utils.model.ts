@@ -3,3 +3,9 @@
 export interface isDark {
   isDark: boolean;
 }
+
+export interface IStatus {
+  text: string;
+  value: number;
+  color: string;
+}

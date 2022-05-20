@@ -1,50 +1,26 @@
-import styled from "styled-components";
 import { theme } from "../styles/theme";
+
+import { statusService } from "../services/status.service";
+import { IStatus } from "../types/utils.model";
+
 import { StatusCard } from "./StatusCard";
 
-const status: IStatus[] = [
-  {
-    text: "To Do",
-    value: 20,
-    color: theme.colors.primary.coral,
-  },
-  {
-    text: "In Progress",
-    value: 36,
-    color: theme.colors.primary.salmon,
-  },
-  {
-    text: "Reviewed",
-    value: 11,
-    color: theme.colors.primary.olive,
-  },
-  {
-    text: "Completed",
-    value: 3,
-    color: theme.colors.primary.cyan,
-  },
-];
+import styled from "styled-components";
 
-interface IStatus {
-  text: string;
-  value: number;
-  color: string;
-}
+const statusCards = statusService.status.map(
+  (stat: IStatus, i: number): JSX.Element => (
+    <StatusCard
+      key={i}
+      text={stat.text}
+      value={stat.value}
+      color={stat.color}
+    />
+  )
+);
 
-export const Status = (): JSX.Element => {
-  return (
-    <StatusContainer>
-      {status.map((stat, i) => (
-        <StatusCard
-          key={i}
-          text={stat.text}
-          value={stat.value}
-          color={stat.color}
-        />
-      ))}
-    </StatusContainer>
-  );
-};
+export const Status = (): JSX.Element => (
+  <StatusContainer>{statusCards}</StatusContainer>
+);
 
 const StatusContainer = styled.div`
   display: flex;
@@ -54,4 +30,6 @@ const StatusContainer = styled.div`
   height: 150px;
   background-color: ${theme.colors.background.white};
   margin-top: 50px;
+
+  box-shadow: ${theme.shadows.card};
 `;
