@@ -38,7 +38,6 @@ type IPropsButton = {
 const Button = styled.button<IPropsButton>`
   padding: 10px 20px;
   border-radius: 5em;
-  font-family: "Inter";
   font-weight: 600;
   font-size: ${({ fontSize }) => `${fontSize}px` || "16px"};
   line-height: 19px;

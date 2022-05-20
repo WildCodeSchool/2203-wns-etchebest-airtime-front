@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import Navbar from "../components/navbar/Navbar";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/",
@@ -11,6 +12,7 @@ const client = new ApolloClient({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
+      <Navbar />
       <Component {...pageProps} />
     </ApolloProvider>
   );

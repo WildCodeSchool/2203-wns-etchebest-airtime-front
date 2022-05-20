@@ -19,29 +19,26 @@ const DEFAULT_NAVBAR = [
     background: "#383838",
     subCategories: [],
   },
-]
+];
 
 const Navbar = () => {
   return (
-    <NavbarSection>
+    <NavbarNav>
       <NavbarTitle>AirTime</NavbarTitle>
       <NavbarUnorderedList>
         <NavbarList categories={DEFAULT_NAVBAR} />
       </NavbarUnorderedList>
-    </NavbarSection>
+    </NavbarNav>
   );
 };
 
-const NavbarSection = styled.section`
+const NavbarNav = styled.nav`
   position: absolute;
   width: 217px;
   height: 100vh;
   left: 0px;
   top: 0px;
   background: #383838;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 `;
 
 const NavbarTitle = styled.h2`
@@ -52,12 +49,9 @@ const NavbarTitle = styled.h2`
 `;
 
 const NavbarUnorderedList = styled.ul`
-  width: 217px;
-  position: absolute;
-  left: 0;
+  width: 100%;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 `;
 
 export default Navbar;
