@@ -51,7 +51,7 @@ const GlobalWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
-  padding-left: 5px;
+  padding-left: 15px;
 `;
 
 const Title = styled(ActivityLineContainer)`
