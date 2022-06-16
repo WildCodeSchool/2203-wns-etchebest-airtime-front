@@ -1,16 +1,14 @@
 import type { NextPage } from "next";
+import { toast } from "react-toastify";
 import styled from "styled-components";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const Home: NextPage = () => {
   const notify = () => toast("Wow so easy!");
-
+  
   return (
     <WrapperIndex>
       <TextHello color="blue">Hello World !</TextHello>
       <ButtonNotify onClick={notify}>Notify!</ButtonNotify>
-      <ToastContainer />
     </WrapperIndex>
   );
 };

@@ -1,0 +1,15 @@
+name: jest-ci
+
+on:
+  push:
+    branches-ignore:
+      - "main"
+
+jobs:
+  test-front:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Goto client and run tests
+        run: npm i && npm run test:ci
