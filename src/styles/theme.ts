@@ -7,6 +7,7 @@ export const theme: ITheme = {
       darkGrey: "#383838",
       purple: "#655D8A",
       lightGrey: "#F0F0F0",
+      transparentWhite: "#ffffff8a",
     },
     primary: {
       coral: "#F38BA0",
@@ -32,10 +33,15 @@ export const theme: ITheme = {
         dark: "#868686",
         darkVador: "#545454",
         regular: "#B3B3B3",
+        lightGrey: "#F0F0F0",
       },
       black: "#333333",
       white: "#FFFFFF",
-      error: "FF0000",
+      error: "#FF0000",
+      lightBlue: "#B5EAEA",
+    },
+    border: {
+      lightGrey: "rgba(0, 0, 0, 0.1)",
     },
   },
   shadows: {
@@ -53,6 +59,7 @@ interface ITheme {
       darkGrey: string;
       purple: string;
       lightGrey: string;
+      transparentWhite: string;
     };
     primary: {
       coral: string;
@@ -79,9 +86,14 @@ interface ITheme {
         dark: string;
         darkVador: string;
         regular: string;
+        lightGrey: string;
       };
       black: string;
       white: string;
+      lightBlue: string;
+    };
+    border: {
+      lightGrey: string;
     };
   };
   shadows: {

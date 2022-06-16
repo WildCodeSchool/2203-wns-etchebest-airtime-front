@@ -1,6 +1,6 @@
 import React from 'react'
-import styled from 'styled-components';
 import { theme } from '../styles/theme';
+import styled from 'styled-components';
 
 export const ColumnStatus = ({title, backgroundColor}: {title: string; backgroundColor: string}) => {
   return (
