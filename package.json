@@ -2,7 +2,8 @@
   "name": "next-without-ssr",
   "private": true,
   "scripts": {
-    "dev": "WATCHPACK_POLLING=true next dev",
+    "dev": "next dev",
+    "docker": "WATCHPACK_POLLING=true next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
