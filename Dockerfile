@@ -2,6 +2,8 @@ FROM node:lts as dependencies
 WORKDIR /airtime
 COPY package*.json ./
 RUN npm install
+RUN npm i @next/swc-linux-x64-gnu
+
 COPY ./ ./
 
 # FROM node:lts as builder
