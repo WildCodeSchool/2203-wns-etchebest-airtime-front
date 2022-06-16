@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
+import {Close} from "../assets/Close";
 
 const OPTIONS_VALUE = [
   { label: "To do" },
@@ -11,20 +12,24 @@ const OPTIONS_VALUE = [
 
 export const HeaderTicket = ({
   onClose,
+  onChangedValue,
 }: {
   onClose: () => void;
+  onChangedValue: (value: string) => void;
 }): JSX.Element => {
   return (
     <WrapperHeader>
       <TextIdTicket>Ticket n°000203</TextIdTicket>
-      <SelectStatus>
+      <SelectStatus onChange={
+        (e: any) => onChangedValue(e.target.value)
+      }>
         {OPTIONS_VALUE.map((status, index) => (
-          <OptionStatus value={index} key={"option n°" + index}>
+          <OptionStatus value={status.label} key={"option n°" + index}>
             {status.label}
           </OptionStatus>
         ))}
       </SelectStatus>
-      <Close onClick={onClose}>X</Close>
+      <CloseSvg  onClick={onClose} />
     </WrapperHeader>
   );
 };
@@ -63,7 +68,9 @@ interface IPropsClose {
   onClick?: () => void;
 }
 
-const Close = styled.div<IPropsClose>`
+const CloseSvg = styled(Close)<IPropsClose>`
   padding: 0;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
 `;

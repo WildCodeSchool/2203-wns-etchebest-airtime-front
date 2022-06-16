@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 
@@ -14,7 +14,27 @@ const TICKETS_INFORMATION = [
   },
 ];
 
-export const ContainerText = (): JSX.Element => {
+interface IValueOnChangedValue {
+  title: string;
+  comment: string;
+}
+
+interface IPropsContainerText {
+  onChangedValue: ({ title, comment }: IValueOnChangedValue) => void;
+}
+
+export const ContainerText = ({
+  onChangedValue,
+}: IPropsContainerText): JSX.Element => {
+  const inputTitle = useRef<HTMLInputElement>();
+  const inputComment = useRef<HTMLInputElement>();
+
+  const changedCurrentValueInInput = () =>
+    onChangedValue({
+      title: inputTitle?.current?.value || "",
+      comment: inputComment?.current?.value || "",
+    });
+
   const fontSize = (index: number): number => {
     const tabFontSize = [20, 14, 12];
     return tabFontSize[index];
@@ -27,26 +47,29 @@ export const ContainerText = (): JSX.Element => {
 
   return (
     <Wrapper>
-      {TICKETS_INFORMATION.map((information, index) => {
-        return (
-          <WrapperText
-            background={
-              index === 0
-                ? theme.colors.text.lightBlue
-                : theme.colors.text.grey.lightGrey
-            }
-            key={"textInformation " + index}
-          >
-            <TextDescription
-              fontSize={fontSize(index)}
-              fontWeight={(index === 0 && 600) || 400}
-              minHeight={minHeight(index)}
-            >
-              {information?.label}
-            </TextDescription>
-          </WrapperText>
-        );
-      })}
+      <WrapperText
+        background={theme.colors.text.lightBlue}
+        fontSize={fontSize(0)}
+        fontWeight={600}
+        minHeight={minHeight(0)}
+        ref={inputTitle}
+        onChange={changedCurrentValueInInput}
+      />
+      <WrapperText
+        background={theme.colors.text.grey.lightGrey}
+        fontSize={fontSize(1)}
+        fontWeight={400}
+        minHeight={minHeight(1)}
+        ref={inputComment}
+        onChange={changedCurrentValueInInput}
+      />
+      <WrapperText
+        background={theme.colors.text.grey.lightGrey}
+        fontSize={fontSize(2)}
+        fontWeight={400}
+        minHeight={minHeight(2)}
+        defaultValue="Message... Documentation available at : www.this-is-a-ticket.com --- 2 hours ago"
+      />
     </Wrapper>
   );
 };
@@ -59,28 +82,27 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const WrapperText = styled.div`
+interface IPropsTextDescription {
+  background?: string;
+  fontWeight?: number;
+  fontSize?: number;
+  minHeight?: number;
+  ref?: any;
+}
+
+const WrapperText = styled.input<IPropsTextDescription>`
   margin: 10px 0;
   padding: 10px 10px 10px 20px;
   display: flex;
   align-items: center;
-  background: ${({ background }: { background: string }) =>
+  background: ${({ background }) =>
     background || theme.colors.background.white};
   width: 95%;
-  min-height: 50px;
-  border-radius: 10px;
-`;
-
-interface IPropsTextDescription {
-  fontWeight?: number;
-  fontSize?: number;
-  minHeight?: number;
-}
-
-const TextDescription = styled.p<IPropsTextDescription>`
   min-height: ${({ minHeight }) => `${minHeight}px` || "unset"};
-  margin: 0;
   font-weight: ${({ fontWeight }) => fontWeight};
   font-size: ${({ fontSize }) => `${fontSize}px` || "14px"};
   line-height: 17px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
 `;
