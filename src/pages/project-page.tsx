@@ -39,7 +39,6 @@ const DROP_DATA = [
 
 const ProjectPage: NextPage = () => {
   const { loading, error, data } = useQuery(GET_ALL_TICKETS);
-  console.log("🚀 ~ data", data);
   //Create ticket
   const [createTicket, { loading: ticketLoading, error: ticketError }] =
     useMutation(CREATE_TICKET, {

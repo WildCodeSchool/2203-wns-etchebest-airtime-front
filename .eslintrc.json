@@ -1,3 +1,11 @@
 {      
-  "extends": ["next/babel", "next/core-web-vitals"]
+  "extends": ["next", "next/core-web-vitals"],
+  "rules": {
+    "prefer-const": 2,
+    "no-console": 1,
+    "no-const-assign": 2,
+    "no-dupe-keys": 2,
+    "no-empty": 2,
+    "no-inline-comments": 1
+  }
 }

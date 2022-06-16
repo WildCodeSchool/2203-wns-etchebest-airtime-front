@@ -40,7 +40,6 @@ const ModalsTicket: NextPage = () => {
     });
 
   const createATicket = () => {
-    console.log(selectedStatus.toLowerCase())
     createTicket({
       variables: {
         title: currentValueInput?.title,
