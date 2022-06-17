@@ -4,7 +4,8 @@ import styled from "styled-components";
 
 const Home: NextPage = () => {
   const notify = () => toast("Wow so easy!");
-  let error = "erreur"
+  console.log("erreur")
+
   return (
     <WrapperIndex>
       <TextHello color="blue">Hello World !</TextHello>
