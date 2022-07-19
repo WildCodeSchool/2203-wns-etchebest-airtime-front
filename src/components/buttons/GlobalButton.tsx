@@ -52,4 +52,11 @@ const Button = styled.button<IPropsButton>`
   pointer-events: ${({ disabled }) => disabled && "none"};
   cursor: ${({ disabled }) => !disabled && "pointer"};
   opacity: ${({ disabled }) => disabled && "0.5"};
+  transition: .5s;
+  &:hover {
+    background: ${({ color }) =>
+    color || theme.colors.text.white};
+    color: ${({ backgroundColor }) =>
+    backgroundColor || theme.colors.background.black};
+  }
 `;

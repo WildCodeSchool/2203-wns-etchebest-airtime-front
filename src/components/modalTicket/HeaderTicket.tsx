@@ -10,6 +10,8 @@ const OPTIONS_VALUE = [
   { label: "Completed" },
 ];
 
+const FAKE_TICKET_ID = 'Ticket n°000203'
+
 export const HeaderTicket = ({
   onClose,
   onChangedValue,
@@ -19,13 +21,13 @@ export const HeaderTicket = ({
 }): JSX.Element => {
   return (
     <WrapperHeader>
-      <TextIdTicket>Ticket n°000203</TextIdTicket>
+      <TextIdTicket>{FAKE_TICKET_ID}</TextIdTicket>
       <SelectStatus onChange={
         (e: any) => onChangedValue(e.target.value)
       }>
-        {OPTIONS_VALUE.map((status, index) => (
-          <OptionStatus value={status.label} key={"option n°" + index}>
-            {status.label}
+        {OPTIONS_VALUE.map(({label}, index) => (
+          <OptionStatus value={label} key={"option n°" + index}>
+            {label}
           </OptionStatus>
         ))}
       </SelectStatus>

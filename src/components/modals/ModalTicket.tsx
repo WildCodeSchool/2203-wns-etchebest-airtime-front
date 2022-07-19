@@ -3,18 +3,14 @@ import styled, { css, keyframes } from "styled-components";
 import { theme } from "../../styles/theme";
 
 interface IPropsModalTicket {
-  children: {
-    header: ReactNode;
-    main: ReactNode;
-    footer: ReactNode;
-  };
+  children: ReactNode;
   animationClose: boolean;
   notAnimationClose?: boolean;
   onClose: Function;
 }
 
 export const ModalTicket = ({
-  children: { header, main, footer },
+  children,
   animationClose,
   notAnimationClose = false,
   onClose,
@@ -25,9 +21,7 @@ export const ModalTicket = ({
       onAnimationEnd={() => (animationClose || notAnimationClose) && onClose()}
     >
       <WrapperContent>
-        {header}
-        {main}
-        {footer}
+        {children}
       </WrapperContent>
     </WrapperModalTicket>
   );
