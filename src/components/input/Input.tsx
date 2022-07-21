@@ -5,24 +5,31 @@ import { theme } from '../../styles/theme';
 interface InputProps {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  type: string;
+  type?: string;
   placeholder: string;
 }
 
-export const InputBase = ({ value, onChange, type, placeholder }: InputProps) => {
-  return (
-    <Input
-      value={value}
-      onChange={onChange}
-      type={type}
-      placeholder={placeholder}
-    />
-  );
-};
+export const InputBase = ({
+  value,
+  onChange,
+  type,
+  placeholder,
+  ...props
+}: InputProps) => (
+  <Input
+    value={value}
+    onChange={onChange}
+    type={type}
+    placeholder={placeholder}
+    {...props}
+  />
+);
 
 const Input = styled.input`
   border: none;
   border-bottom: 2px solid ${theme.colors.border.lightGrey};
-  margin: 8px 8px;
+  margin: 16px 16px;
   outline: none;
+  color: ${theme.colors.text.grey.darkVador};
+  width: 100%;
 `;
