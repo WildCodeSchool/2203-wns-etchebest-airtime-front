@@ -23,6 +23,8 @@ export const InputBase = ({ value, onChange, type, placeholder }: InputProps) =>
 const Input = styled.input`
   border: none;
   border-bottom: 2px solid ${theme.colors.border.lightGrey};
-  margin: 8px 8px;
+  margin: 16px 16px;
   outline: none;
+  color: ${theme.colors.text.grey.darkVador};
+  width: 300px;
 `;

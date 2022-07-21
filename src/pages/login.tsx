@@ -1,4 +1,5 @@
 import { useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { GlobalButton } from '../components/buttons/GlobalButton';
@@ -6,13 +7,12 @@ import { InputBase } from '../components/input/Input';
 import { LOGIN, SIGNUP } from '../graphql/mutations/userMutation';
 import { theme } from '../styles/theme';
 
-const Authentification = () => {
+const Login = () => {
   //Form
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
-  const [role, setRole] = useState('developer');
 
   //Mutation
   const [signIn, { data }] = useMutation(LOGIN);
@@ -22,9 +22,13 @@ const Authentification = () => {
 
   if (data) {
     localStorage.setItem('token', data?.signIn?.token);
+    localStorage.setItem('user', JSON.stringify(data?.signIn));
   } else if (dataSignUp) {
     localStorage.setItem('token', dataSignUp?.signUp?.token);
+    localStorage.setItem('user', JSON.stringify(dataSignUp?.signUp));
   }
+
+  const router = useRouter();
 
   return (
     <>
@@ -32,58 +36,34 @@ const Authentification = () => {
         <AuthentificationTitle>AirTime</AuthentificationTitle>
         <InscriptionConnexionDiv>
           <ButtonConnexion
-            label={'Se Connecter'}
-            onClick={async () => {
-              try {
-                await signIn({
-                  variables: { email: email, password: password },
-                });
-              } catch (err) {
-                alert('Mauvais identifiants');
-              }
+            onClick={() => {
+              setSubscription(false);
+              setConnection(!connection);
             }}
+            label="Connexion"
           />
           <ButtonRegistration
-            label={"S'inscrire"}
+            onClick={() => {
+              setSubscription(!subscription);
+              setConnection(false);
+            }}
+            label="Inscription"
             backgroundColor={theme.colors.background.white}
             color={theme.colors.text.black}
-            onClick={async () => {
-              try {
-                await signUp({
-                  variables: {
-                    email: email,
-                    password: password,
-                    firstname: firstname,
-                    lastname: lastname,
-                    role: role,
-                  },
-                });
-              } catch (err) {
-                alert('Mauvais identifiants');
-              }
-            }}
           />
         </InscriptionConnexionDiv>
       </AuthentificationSection>
-      <button
-        onClick={() => {
-          setSubscription(false);
-          setConnection(!connection);
-        }}
-      >
-        Connexion
-      </button>
-      <button
-        onClick={() => {
-          setSubscription(!subscription);
-          setConnection(false);
-        }}
-      >
-        Inscription
-      </button>
 
       {connection && (
-        <div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 32,
+          }}
+        >
           <InputBase
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -96,11 +76,36 @@ const Authentification = () => {
             type="password"
             placeholder="Mot de passe"
           />
+          <div>
+            <ButtonConnexion
+              label={'Se Connecter'}
+              onClick={async () => {
+                try {
+                  await signIn({
+                    variables: { email: email, password: password },
+                  });
+                  if (data) {
+                    router.push('/');
+                  }
+                } catch (err) {
+                  alert('Mauvais identifiants');
+                }
+              }}
+            />
+          </div>
         </div>
       )}
 
       {subscription && (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 32,
+          }}
+        >
           <InputBase
             value={firstname}
             onChange={(e) => setFirstname(e.target.value)}
@@ -113,12 +118,6 @@ const Authentification = () => {
             type="text"
             placeholder="Nom"
           />
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
-            <option value="developer">developer</option>
-            <option value="authentified visitor">authentified visitor</option>
-            <option value="project manager">project manager</option>
-            <option value="admin">admin</option>
-          </select>
           <InputBase
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -131,6 +130,30 @@ const Authentification = () => {
             type="password"
             placeholder="Mot de passe"
           />
+          <div>
+            <ButtonRegistration
+              label={"S'inscrire"}
+              backgroundColor={theme.colors.background.white}
+              color={theme.colors.text.black}
+              onClick={async () => {
+                try {
+                  await signUp({
+                    variables: {
+                      email: email,
+                      password: password,
+                      firstname: firstname,
+                      lastname: lastname,
+                    },
+                  });
+                  if (dataSignUp) {
+                    router.push('/');
+                  }
+                } catch (err) {
+                  alert('Mauvais identifiants');
+                }
+              }}
+            />
+          </div>
         </div>
       )}
     </>
@@ -149,7 +172,8 @@ const AuthentificationSection = styled.section`
 
 const AuthentificationTitle = styled.h1`
   font-size: 8rem;
-  margin: 40px;
+  margin: 64px;
+  margin-bottom: 80px;
   color: #333;
 `;
 
@@ -160,9 +184,11 @@ const InscriptionConnexionDiv = styled.div`
 `;
 
 const ButtonConnexion = styled(GlobalButton)`
-  margin-bottom: 20px;
+  margin: 16px;
 `;
 
-const ButtonRegistration = styled(GlobalButton)``;
+const ButtonRegistration = styled(GlobalButton)`
+  margin: 16px;
+`;
 
-export default Authentification;
+export default Login;

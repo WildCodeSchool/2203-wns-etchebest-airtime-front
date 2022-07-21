@@ -5,6 +5,8 @@ import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from "@ap
 import { setContext } from "@apollo/client/link/context";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
@@ -27,6 +29,12 @@ const client = new ApolloClient({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      router.push('/login');
+    }
+  }, []);
   return (
     <ApolloProvider client={client}>
       <Component {...pageProps} />
